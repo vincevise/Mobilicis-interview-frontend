@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from "react"; 
+import { memo, useEffect, useRef, useState } from "react"; 
 import { useQuery } from "react-query";
 import { getUsers } from "../api/api";
-import TableWithPagination from "../components/TableWithPagination";
-import CityTable from "../components/CityTable";
+
 import { VscFilter, VscFilterFilled } from "react-icons/vsc"; 
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"; 
 import FilterModal from "../components/FilterModal";
+
+import TableWithPagination from "../components/TableWithPagination";
+import CityTable from "../components/CityTable";
 
 function Home() {
     const [apiReq, setApiReq] = useState("getUsers");
@@ -172,4 +174,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default memo(Home);

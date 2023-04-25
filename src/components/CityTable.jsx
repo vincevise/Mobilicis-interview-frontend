@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { memo, useEffect, useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { getUsers } from '../api/api'
 import { usePagination, useSortBy, useTable } from 'react-table';
@@ -79,4 +79,4 @@ const CityTable = ({data}) => {
     
   };
   
-  export default CityTable;
+  export default memo(CityTable);

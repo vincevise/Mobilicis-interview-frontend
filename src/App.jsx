@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
+ import { Suspense, lazy } from "react";
 import "./App.css";
-import { useQuery } from "react-query";
-import { getUsers } from "./api/api";
-import TableWithPagination from "./components/TableWithPagination";
-import CityTable from "./components/CityTable";
-import { FiFilter } from "react-icons/fi";
-import RangeSlider from "./components/ReactSlider";
-import Home from "./pages/Home";
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
+// import Home from "./pages/Home";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+const Home = lazy(()=>import("./pages/Home"))
 
 function App() {
    
@@ -16,7 +12,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home/>}/>
+          <Route path="/" element={
+            <Suspense fallback={<div>...Loading</div>}>
+              <Home/>
+            </Suspense>
+          }/>
         </Routes>
       </BrowserRouter>
     </>

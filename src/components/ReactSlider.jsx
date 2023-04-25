@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 
 const RangeSlider = ({ min, max, step, value, onChange, refresh, title, name }) => {
@@ -91,4 +91,4 @@ const RangeSlider = ({ min, max, step, value, onChange, refresh, title, name }) 
   );
 };
 
-export default RangeSlider;
+export default memo(RangeSlider);

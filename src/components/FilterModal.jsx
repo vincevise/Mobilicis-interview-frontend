@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import RangeSlider from './ReactSlider';
 
 const FilterModal = ({refresh}) => {
@@ -8,8 +8,8 @@ const FilterModal = ({refresh}) => {
 
   return (
     <div className='absolute flex flex-col gap-2 w-72 min-h-48 bg-white z-10 left-0 mt-1 shadow-lg px-3 py-4 rounded-md border border-slate-100'>
-        <label htmlFor="findCar" className='font-semibold'>Car</label> 
-            {/* <input id='findCar' type="text" className='p-2 w-full border-2 border-slate-500 rounded-md focus:outline-blue-500 focus:bg-slate-100' placeholder='Car'/>  */}
+        {/* <label htmlFor="findCar" className='font-semibold'>Car</label>  */}
+        {/* <input id='findCar' type="text" className='p-2 w-full border-2 border-slate-500 rounded-md focus:outline-blue-500 focus:bg-slate-100' placeholder='Car'/>  */}
         <RangeSlider
               min={0}
               max={10}
@@ -34,4 +34,4 @@ const FilterModal = ({refresh}) => {
   )
 }
 
-export default FilterModal
+export default memo(FilterModal)

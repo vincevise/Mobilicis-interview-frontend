@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import { useTable, usePagination, useSortBy } from "react-table";
 
 const TableWithPagination = ({ data }) => {
@@ -147,4 +147,4 @@ const {
   );
 };
 
-export default TableWithPagination;
+export default memo(TableWithPagination);
