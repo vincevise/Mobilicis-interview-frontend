@@ -11,8 +11,7 @@ const RangeSlider = ({ min, max, step, value, onChange, refresh, title, name }) 
 
     useEffect(()=>{
         setSliderValue(0) 
-        onChange(0)
-        console.log(refresh)
+        onChange(0) 
     },[refresh])
 
     const params = useMemo(() => {
