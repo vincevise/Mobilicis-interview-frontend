@@ -54,12 +54,13 @@ const Filterbar = ({handleClick, refresh, apiReq}) => {
                  Filter
             </span> 
             <div ref={modalFilterRef} className="hidden">
+                {/* Modal for Income and Phone Price range filter */}
                 <FilterModal refresh={refresh} /> 
             </div>
         </div>
          
         <h1 className="w-full shrink-0 font-semibold text-sm border-slate-300 border-b p-2 my-1">Suggested Filter</h1>
-        
+        {/* Suggested Filter Chips */}
         {apiRoutes.map((apiRoute)=>{
             return (
                 <FilterChips apiRoute={apiRoute} handleClick={handleClick} apiReq={apiReq} key={apiRoute}/>

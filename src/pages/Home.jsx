@@ -1,62 +1,56 @@
 import { memo, useEffect, useRef, useState } from "react"; 
 import { useQuery } from "react-query";
 import { getUsers } from "../api/api";
-
-
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom"; 
-import FilterModal from "../components/FilterModal";
-
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";  
 import TableWithPagination from "../components/TableWithPagination";
 import CityTable from "../components/CityTable";
 import Filterbar from "../components/Filterbar";
 
 function Home() {
-    const [apiReq, setApiReq] = useState("getUsers");
-    const [cities, setCities] = useState([]);
-    const [refresh, setRefresh] = useState(false) 
-    const [searchParams, setSearchParams] = useSearchParams()
-    const [error, setError] = useState(false)
+  // this state is for making api request for the diffrent queries mentioned in the assignment 
+  const [apiReq, setApiReq] = useState("getUsers"); 
 
-    const location = useLocation()
-    const navigate = useNavigate('/')
+  // this state is to clear and set the values to zero of income and phone price range filters 
+  const [refresh, setRefresh] = useState(false) 
+  const [searchParams, setSearchParams] = useSearchParams() 
 
-    const { data, isLoading, isError, isFetching, refetch } = useQuery("users",() => getUsers(apiReq),
-        {
-            refetchOnWindowFocus: false,
-            manual: true,
-        }
-    );
- 
+  const location = useLocation() 
 
-    useEffect(() => {
-        getUsers("question5").then((res) => setCities(res.data)).catch((error)=>{setError(error.message)});
-        navigate('/')
-    }, []);
+  const { data, isError, isFetching, refetch,  } = useQuery("users",() => getUsers(apiReq),
+      {
+          refetchOnWindowFocus: false,
+          manual: true,
+      }
+  );
 
-    useEffect(() => {
-        refetch();
-    }, [apiReq]);
+        
+  const citiesQuery = useQuery("cities",()=>getUsers("question5"),{refetchOnWindowFocus: false, manual: true,})
+  console.log(citiesQuery.data)
+  
+  useEffect(() => {
+      refetch();
+  }, [apiReq]);
 
-    useEffect(()=>{
-        setApiReq(`search/${location.search}`)
-    },[location])
+  useEffect(()=>{
+      setApiReq(`search/${location.search}`) // onChange of range filter, the query params of url will change which will then trigger another api call 
+  },[location])
 
 
-    const handleClick = (e) => {
-        setRefresh(!refresh)
-        setApiReq(e.target.dataset.api);
-        if(location.search.length > 0){
-            setSearchParams()
-        } 
-    };
+  const handleClick = (e) => {
+      setRefresh(!refresh)
+      setApiReq(e.target.dataset.api);
+      if(location.search.length > 0){
+          setSearchParams()
+      } 
+  };
 
-    if (cities.length === 0) {
-        return <div>Loading....</div>;
-    }
+  if (citiesQuery.isFetching && isFetching ) {
+      return <div>Loading....</div>;
+  }
 
-    if (isError || error) {
-        return <div>Error</div>;
-    }
+  if (isError || citiesQuery.isError) {
+      return <div>Error</div>;
+  }
 
 
   return (
@@ -70,8 +64,12 @@ function Home() {
         (<TableWithPagination data={data.data} />)
       }
 
-      {/* 5th query will be shown in table below */}
-      <CityTable data={cities} /> 
+      {/* 5th query will be shown in table below */} 
+      {citiesQuery.isFetching ? 
+        (<>...Loading</>) 
+          : 
+        (<CityTable data={citiesQuery.data.data} />)
+      }
     </div>
   );
 }
